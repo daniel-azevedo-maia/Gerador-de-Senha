@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Password Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    label {
+      font-size: 14px;
+      color: #666;
+    }
+    input, button {
+      font-size: 16px;
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .password-output {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+    }
+    .password-output input {
+      flex: 1;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .password-output button {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      padding: 0;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .password-output button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gerador de senhas</h1>
+    <label for="length">Selecione o tamanho da senha:</label>
+    <input type="number" id="length" min="4" max="64" value="12" />
+    <button onclick="generatePassword()">Gerar senha</button>
+    <div class="password-output">
+      <input type="password" id="password" readonly />
+      <button onclick="togglePassword()">👁</button>
+      <button onclick="copyPassword()">📋</button>
+    </div>
+  </div>
+
+  <script>
+    function generatePassword() {
+      const length = document.getElementById('length').value;
+      const chars =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?';
+      let password = '';
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * chars.length);
+        password += chars[randomIndex];
+      }
+      const passwordField = document.getElementById('password');
+      passwordField.value = password;
+      passwordField.type = "password"; // Reset to hidden
+    }
+
+    function togglePassword() {
+      const passwordField = document.getElementById('password');
+      passwordField.type =
+        passwordField.type === 'password' ? 'text' : 'password';
+    }
+
+    function copyPassword() {
+      const passwordField = document.getElementById('password');
+      passwordField.select();
+      navigator.clipboard.writeText(passwordField.value).then(() => {
+        alert('Password copied to clipboard!');
+      });
+    }
+  </script>
+</body>
+</html>
